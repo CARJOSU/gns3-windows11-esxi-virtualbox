@@ -1,7 +1,5 @@
 # GNS3 + Virtualización en Windows 11
 
-
-
 ## Objetivo
 
 Este documento muestra cómo configurar laboratorios de red usando GNS3 en Windows 11, integrando VirtualBox (hipervisor tipo 2) y VMware ESXi (hipervisor tipo 1).  
@@ -40,6 +38,16 @@ Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
 ## 2. GNS3 VM
 
+### Estado de la máquina virtual
+
+A continuación se muestra la ejecución correcta de la GNS3 VM en VirtualBox, incluyendo la IP asignada y acceso al servidor:
+
+https://github.com/CARJOSU/gns3-windows11-esxi-virtualbox/blob/main/img/mermaid-diagram%20(1).png
+
+**Figura 1.** Ejecución de la máquina virtual de GNS3 mostrando dirección IP y estado del servidor.
+
+---
+
 ### KVM
 
 GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
@@ -49,7 +57,8 @@ GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 
 ### Imagen de KVM habilitado
 
-![KVM habilitado](img/kvm-true.png)
+![Topología de GNS3](img/img/mermaid-diagram (1).png)
+
 
 ### Recomendación de recursos
 
@@ -99,8 +108,6 @@ Permite capturar todo el tráfico de red, necesario para switches virtuales y VL
 
 ![Diagrama ESXi](img/diagrama-integracion.png)
 
-- Muestra GNS3 GUI → GNS3 VM → VMware ESXi → Máquinas virtuales (Routers, Switches, Servidores)
-
 ---
 
 ## 5. Troubleshooting
@@ -111,7 +118,9 @@ Permite capturar todo el tráfico de red, necesario para switches virtuales y VL
 | Sin conexión | Modo promiscuo desactivado | Permitir todo |
 | Error puerto 3080 | Firewall | Abrir puertos 3080 y 5000-10000 |
 
-**Comando importante:**
+---
+
+## Comando importante
 
 ```bash
 VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
