@@ -5,7 +5,7 @@
 El objetivo de este trabajo es investigar y poner en práctica la creación de laboratorios de red usando GNS3 en Windows 11, integrando tanto un hipervisor tipo 2 (VirtualBox) como uno tipo 1 (VMware ESXi).  
 La idea es lograr un entorno lo más parecido posible a una red real.
 
----
+
 
 ##        1. Arquitectura de Virtualización en Windows 11
 
@@ -20,7 +20,7 @@ Esto puede causar problemas porque:
 
 #### Problema común
 
----
+
 
 
 #### Solución
@@ -30,7 +30,7 @@ Esto puede causar problemas porque:
 - Desactivar "Aislamiento de núcleo"
 - Reiniciar el equipo
 
----
+
 
 ### Activación de virtualización (VT-x / AMD-V)
 
@@ -59,14 +59,14 @@ GNS3 utiliza KVM para ejecutar las máquinas virtuales con mejor rendimiento.
 
 ####  Estado correcto
 
----
+
 
 
 Si aparece en False:
 - La virtualización no está bien configurada
 - El rendimiento baja bastante
 
----
+
 
 ###  Recursos recomendados
 
@@ -77,7 +77,7 @@ Si aparece en False:
 
 Esto ayuda a que el sistema no se sature y funcione estable.
 
----
+
 
 ##      3. Integración con VirtualBox
 
@@ -105,10 +105,7 @@ Es importante para:
 #### Configuración:
 
 
----
 
-
----
 
 ##  4. Integración con VMware ESXi
 
@@ -119,7 +116,7 @@ Es importante para:
 
 Esto permite trabajar con topologías más grandes sin afectar tanto la computadora.
 
----
+
 
 ###  Configuración del vSwitch
 
@@ -130,7 +127,7 @@ Esto permite trabajar con topologías más grandes sin afectar tanto la computad
 
 Esto es necesario para que la red funcione correctamente.
 
----
+
 
 ##  5. Troubleshooting
 
@@ -140,8 +137,11 @@ Esto es necesario para que la red funcione correctamente.
 | No hay conexión | Promiscuo desactivado | Permitir todo |
 | Error puerto 3080 | Firewall | Abrir puertos |
 
+###  Comando usado
 
----
+```bash
+VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
+
 
 ## Conclusión
 
@@ -153,7 +153,4 @@ Con estos ajustes, el entorno es estable y eficiente, facilitando el desarrollo 
 
 
 
-###  Comando usado
 
-```bash
-VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
