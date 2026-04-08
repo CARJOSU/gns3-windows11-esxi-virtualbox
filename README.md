@@ -141,22 +141,19 @@ Esto es necesario para que la red funcione correctamente.
 | Error puerto 3080 | Firewall | Abrir puertos |
 
 
+---
+
+## Conclusión
+
+La integración de GNS3 con hipervisores tipo 1 (VMware ESXi) y tipo 2 (VirtualBox) en Windows 11 permite crear laboratorios avanzados y realistas.
+
+Es fundamental configurar correctamente la virtualización (activar VT-x/AMD-V y desactivar el aislamiento de núcleo).
+
+Con estos ajustes, el entorno es estable y eficiente, facilitando el desarrollo de prácticas profesionales y experimentos en redes.
+
+
 
 ###  Comando usado
 
 ```bash
 VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
-
----
-
-
-
-##  Conclusión
-
-La integración de GNS3 con hipervisores tipo 1 (VMware ESXi) y tipo 2 (VirtualBox) en Windows 11 permite crear laboratorios de red avanzados y realistas, ideales para aprender y probar configuraciones complejas.  
-
-Es fundamental configurar correctamente la virtualización (activar VT-x/AMD-V y desactivar el aislamiento de núcleo) y ajustar las opciones de red, como el modo promiscuo, para evitar problemas de rendimiento y conectividad.  
-
-Con estos ajustes, el entorno es estable y eficiente, facilitando el desarrollo de prácticas profesionales y experimentos en redes.
-
-
