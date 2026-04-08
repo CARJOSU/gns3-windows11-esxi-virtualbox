@@ -42,7 +42,7 @@ Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
 A continuación se muestra la ejecución correcta de la GNS3 VM en VirtualBox, incluyendo la IP asignada y acceso al servidor:
 
-https://github.com/CARJOSU/gns3-windows11-esxi-virtualbox/blob/main/img/mermaid-diagram%20(1).png
+![Topología de GNS3](img/img/mermaid-diagram (1).png)
 
 **Figura 1.** Ejecución de la máquina virtual de GNS3 mostrando dirección IP y estado del servidor.
 
