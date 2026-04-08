@@ -5,7 +5,6 @@
 Este documento muestra cómo configurar laboratorios de red usando GNS3 en Windows 11, integrando VirtualBox (hipervisor tipo 2) y VMware ESXi (hipervisor tipo 1).  
 El objetivo es poder simular redes reales de manera eficiente y estable.
 
----
 
 ## 1. Arquitectura de Virtualización en Windows 11
 
@@ -34,7 +33,6 @@ Estas funciones pueden interferir con otros hipervisores, haciendo que GNS3 VM n
 **Verificación:**  
 Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
----
 
 ## 2. GNS3 VM
 
@@ -42,11 +40,10 @@ Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
 A continuación se muestra la ejecución correcta de la GNS3 VM en VirtualBox, incluyendo la IP asignada y acceso al servidor:
 
-![Topología de GNS3](img/img/mermaid-diagram (1).png)
+![Topología de GNS3](img/img.png)
 
 **Figura 1.** Ejecución de la máquina virtual de GNS3 mostrando dirección IP y estado del servidor.
 
----
 
 ### KVM
 
@@ -57,7 +54,7 @@ GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 
 ### Imagen de KVM habilitado
 
-![Topología de GNS3](img/img/mermaid-diagram (1).png)
+![Topología de GNS3](img/img1.png)
 
 
 ### Recomendación de recursos
@@ -69,7 +66,7 @@ GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 
 Esto ayuda a que Windows funcione estable mientras corre GNS3 VM.
 
----
+
 
 ## 3. Integración con VirtualBox
 
@@ -79,7 +76,7 @@ Permite que GNS3 en la PC se comunique con la GNS3 VM.
 
 ### Imagen de VirtualBox Host-Only
 
-![VirtualBox Host-Only](img/virtualbox-hostonly.png)
+![Topología de GNS3](img/img2.png)
 
 ### Modo Promiscuo
 
@@ -88,7 +85,6 @@ Permite capturar todo el tráfico de red, necesario para switches virtuales y VL
 **Configuración:**  
 `Modo Promiscuo → Permitir todo`
 
----
 
 ## 4. Integración con VMware ESXi
 
@@ -106,9 +102,9 @@ Permite capturar todo el tráfico de red, necesario para switches virtuales y VL
 
 ### Diagrama de integración GNS3 + ESXi
 
-![Diagrama ESXi](img/diagrama-integracion.png)
+![Topología de GNS3](img/img3.png)
 
----
+
 
 ## 5. Troubleshooting
 
