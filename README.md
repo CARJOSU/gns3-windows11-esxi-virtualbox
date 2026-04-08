@@ -1,7 +1,6 @@
 # GNS3 + Virtualización en Windows 11
 
 
-
 ## Objetivo
 
 Este documento muestra cómo configurar laboratorios de red usando GNS3 en Windows 11, integrando VirtualBox (hipervisor tipo 2) y VMware ESXi (hipervisor tipo 1).  
