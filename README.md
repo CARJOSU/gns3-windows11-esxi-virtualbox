@@ -147,8 +147,9 @@ Esto es necesario para que la red funcione correctamente.
 ```bash
 VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
 
-
 ---
+
+
 
 ##  Conclusión
 
