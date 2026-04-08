@@ -1,12 +1,13 @@
 # GNS3 + Virtualización en Windows 11
 
 
+
 ## Objetivo
 
 Este documento muestra cómo configurar laboratorios de red usando GNS3 en Windows 11, integrando VirtualBox (hipervisor tipo 2) y VMware ESXi (hipervisor tipo 1).  
 El objetivo es poder simular redes reales de manera eficiente y estable.
 
-
+---
 
 ## 1. Arquitectura de Virtualización en Windows 11
 
@@ -35,7 +36,7 @@ Estas funciones pueden interferir con otros hipervisores, haciendo que GNS3 VM n
 **Verificación:**  
 Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
-
+---
 
 ## 2. GNS3 VM
 
@@ -46,6 +47,10 @@ GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 - Estado correcto: `KVM support available: True`  
 - Si aparece False: bajo rendimiento y virtualización deshabilitada
 
+### Imagen de KVM habilitado
+
+![KVM habilitado](img/kvm-true.png)
+
 ### Recomendación de recursos
 
 | Recurso | Sugerido |
@@ -55,7 +60,7 @@ GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 
 Esto ayuda a que Windows funcione estable mientras corre GNS3 VM.
 
-
+---
 
 ## 3. Integración con VirtualBox
 
@@ -63,9 +68,9 @@ Esto ayuda a que Windows funcione estable mientras corre GNS3 VM.
 
 Permite que GNS3 en la PC se comunique con la GNS3 VM.
 
-Pasos:
-- Crear adaptador Host-Only en VirtualBox
-- Asignarlo a la GNS3 VM
+### Imagen de VirtualBox Host-Only
+
+![VirtualBox Host-Only](img/virtualbox-hostonly.png)
 
 ### Modo Promiscuo
 
@@ -74,16 +79,14 @@ Permite capturar todo el tráfico de red, necesario para switches virtuales y VL
 **Configuración:**  
 `Modo Promiscuo → Permitir todo`
 
-
+---
 
 ## 4. Integración con VMware ESXi
 
 ### Arquitectura
 
-- Cliente: GNS3 en tu computadora  
+- Cliente: GNS3 en tu PC  
 - Servidor: ESXi ejecutando las máquinas virtuales
-
-Esto permite manejar topologías más complejas sin sobrecargar tu PC.
 
 ### Configuración del vSwitch
 
@@ -92,7 +95,13 @@ Esto permite manejar topologías más complejas sin sobrecargar tu PC.
 | Promiscuous Mode | Accept |
 | MAC Address Changes | Accept |
 
+### Diagrama de integración GNS3 + ESXi
 
+![Diagrama ESXi](img/diagrama-integracion.png)
+
+- Muestra GNS3 GUI → GNS3 VM → VMware ESXi → Máquinas virtuales (Routers, Switches, Servidores)
+
+---
 
 ## 5. Troubleshooting
 
@@ -106,6 +115,3 @@ Esto permite manejar topologías más complejas sin sobrecargar tu PC.
 
 ```bash
 VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
-
-
-
