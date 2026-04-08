@@ -1,156 +1,112 @@
 # GNS3 + Virtualización en Windows 11
 
+
+
 ## Objetivo
 
-El objetivo de este trabajo es investigar y poner en práctica la creación de laboratorios de red usando GNS3 en Windows 11, integrando tanto un hipervisor tipo 2 (VirtualBox) como uno tipo 1 (VMware ESXi).  
-La idea es lograr un entorno lo más parecido posible a una red real.
+Este documento muestra cómo configurar laboratorios de red usando GNS3 en Windows 11, integrando VirtualBox (hipervisor tipo 2) y VMware ESXi (hipervisor tipo 1).  
+El objetivo es poder simular redes reales de manera eficiente y estable.
 
 
 
-##        1. Arquitectura de Virtualización en Windows 11
+## 1. Arquitectura de Virtualización en Windows 11
 
 ### Aislamiento de núcleo y VBS
 
-Windows 11 tiene funciones de seguridad como el aislamiento de núcleo y VBS que usan Hyper-V internamente.
+Windows 11 incluye funciones de seguridad que usan Hyper-V, como el aislamiento de núcleo y VBS.  
+Estas funciones pueden interferir con otros hipervisores, haciendo que GNS3 VM no funcione correctamente.
 
-Esto puede causar problemas porque:
-- Ocupa la virtualización (VT-x / AMD-V)
-- Genera conflictos con VirtualBox
-- Hace que GNS3 VM no funcione correctamente
+**Problemas frecuentes:**
+- Virtualización ocupada por Windows
+- Conflictos con VirtualBox
+- KVM no disponible
 
-#### Problema común
+**Solución:**
+1. Abrir Seguridad de Windows
+2. Ir a “Seguridad del dispositivo”
+3. Desactivar “Aislamiento de núcleo”
+4. Reiniciar el sistema
 
-
-
-
-#### Solución
-
-- Ir a Seguridad de Windows
-- Entrar a "Seguridad del dispositivo"
-- Desactivar "Aislamiento de núcleo"
-- Reiniciar el equipo
-
-
-
-### Activación de virtualización (VT-x / AMD-V)
-
-Para que todo funcione bien:
+### Activar VT-x / AMD-V
 
 1. Entrar al BIOS/UEFI
-2. Activar:
-   - Intel VT-x (Intel)
-   - AMD-V (AMD)
-3. Guardar cambios
+2. Activar Intel VT-x o AMD-V según corresponda
+3. Guardar y reiniciar
 
-#### Verificación
-
-En el Administrador de tareas → Rendimiento:
-
-Debe aparecer:
+**Verificación:**  
+Administrador de tareas → Rendimiento → Virtualización: Habilitada
 
 
 
+## 2. GNS3 VM
 
-##           2. GNS3 VM
+### KVM
 
-###  KVM
+GNS3 usa KVM para ejecutar máquinas virtuales de forma eficiente.
 
-GNS3 utiliza KVM para ejecutar las máquinas virtuales con mejor rendimiento.
+- Estado correcto: `KVM support available: True`  
+- Si aparece False: bajo rendimiento y virtualización deshabilitada
 
-####  Estado correcto
+### Recomendación de recursos
 
+| Recurso | Sugerido |
+|--------|-----------|
+| RAM    | 4 – 8 GB  |
+| CPU    | 2 – 4 núcleos |
 
-
-
-Si aparece en False:
-- La virtualización no está bien configurada
-- El rendimiento baja bastante
-
-
-
-###  Recursos recomendados
-
-| Recurso | Configuración |
-|--------|-------------|
-| RAM | 4 – 8 GB |
-| CPU | 2 – 4 núcleos |
-
-Esto ayuda a que el sistema no se sature y funcione estable.
+Esto ayuda a que Windows funcione estable mientras corre GNS3 VM.
 
 
 
-##      3. Integración con VirtualBox
+## 3. Integración con VirtualBox
 
-###  Red Host-Only
+### Red Host-Only
 
-Se usa para conectar:
-- El GNS3 (en Windows)
-- La GNS3 VM
+Permite que GNS3 en la PC se comunique con la GNS3 VM.
 
-#### Pasos:
+Pasos:
 - Crear adaptador Host-Only en VirtualBox
 - Asignarlo a la GNS3 VM
 
+### Modo Promiscuo
 
+Permite capturar todo el tráfico de red, necesario para switches virtuales y VLANs.
 
-###  Modo Promiscuo
-
-Permite que la tarjeta de red vea todo el tráfico.
-
-Es importante para:
-- Switches virtuales
-- VLANs
-- Comunicación entre dispositivos
-
-#### Configuración:
+**Configuración:**  
+`Modo Promiscuo → Permitir todo`
 
 
 
+## 4. Integración con VMware ESXi
 
-##  4. Integración con VMware ESXi
+### Arquitectura
 
-###  Arquitectura
+- Cliente: GNS3 en tu computadora  
+- Servidor: ESXi ejecutando las máquinas virtuales
 
-- Cliente: GNS3 en la PC
-- Servidor: ESXi con máquinas virtuales
+Esto permite manejar topologías más complejas sin sobrecargar tu PC.
 
-Esto permite trabajar con topologías más grandes sin afectar tanto la computadora.
-
-
-
-###  Configuración del vSwitch
+### Configuración del vSwitch
 
 | Opción | Valor |
-|------|------|
+|--------|-------|
 | Promiscuous Mode | Accept |
 | MAC Address Changes | Accept |
 
-Esto es necesario para que la red funcione correctamente.
 
 
-
-##  5. Troubleshooting
+## 5. Troubleshooting
 
 | Problema | Causa | Solución |
-|---------|------|---------|
+|----------|-------|---------|
 | KVM en False | Virtualización no disponible | Activar VT-x / AMD-V |
-| No hay conexión | Promiscuo desactivado | Permitir todo |
-| Error puerto 3080 | Firewall | Abrir puertos |
+| Sin conexión | Modo promiscuo desactivado | Permitir todo |
+| Error puerto 3080 | Firewall | Abrir puertos 3080 y 5000-10000 |
 
-###  Comando usado
+**Comando importante:**
 
 ```bash
 VBoxManage modifyvm "GNS3 VM" --nested-hw-virt on
-
-
-## Conclusión
-
-La integración de GNS3 con hipervisores tipo 1 (VMware ESXi) y tipo 2 (VirtualBox) en Windows 11 permite crear laboratorios avanzados y realistas.
-
-Es fundamental configurar correctamente la virtualización (activar VT-x/AMD-V y desactivar el aislamiento de núcleo).
-
-Con estos ajustes, el entorno es estable y eficiente, facilitando el desarrollo de prácticas profesionales y experimentos en redes.
-
 
 
 
